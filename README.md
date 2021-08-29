@@ -1,4 +1,4 @@
-movie app
+# movie app
 
 a complete movies app along with a beautiful UI as well as the API integration using flutter.
 
