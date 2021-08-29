@@ -1,6 +1,7 @@
 # movie_app
 
 a complete movies app along with a beautiful UI as well as the API integration using flutter.
+
 App Features:
 • Get the name of the Most popular, Trending and Top rated movies in the home page along with the movie poster.
 • upon choosing a movie from the trending section, Get access to the average rating, releasing date, and a full description of the movie.
