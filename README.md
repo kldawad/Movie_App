@@ -1,16 +1,10 @@
 # movie_app
 
-A new Flutter project.
+a complete movies app along with a beautiful UI as well as the API integration using flutter.
+App Features:
+• Get the name of the Most popular, Trending and Top rated movies in the home page along with the movie poster.
+• upon choosing a movie from the trending section, Get access to the average rating, releasing date, and a full description of the movie.
 
-## Getting Started
+![2-min](https://user-images.githubusercontent.com/73375986/131255480-7b9de412-318b-4486-aa90-0190c2c8578c.jpg)
+![1-min (1)](https://user-images.githubusercontent.com/73375986/131255513-66ea3669-3280-460a-a611-3856e608aab1.jpg)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
