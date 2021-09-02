@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+import 'package:movie_app/view_model/trending_view_model.dart';
+
 import '../description.dart';
-import 'package:movie_app/models/movies_data.dart';
+
+TrendingViewModel viewModel = Get.put(TrendingViewModel());
 
 class TrendingMovies extends StatelessWidget {
   @override
@@ -21,71 +24,74 @@ class TrendingMovies extends StatelessWidget {
           SizedBox(height: 10),
           Container(
             height: 270,
-            child: Consumer<MoviesModel>(
-              builder: (context, trendingData, child) {
-                final trendingMovies = trendingData.trending!;
-                return ListView.builder(
-                  itemCount: trendingMovies.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      width: 140,
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      'https://image.tmdb.org/t/p/original/${trendingMovies['results'][index]['poster_path']}'),
-                                  fit: BoxFit.cover,
+            child: GetX<TrendingViewModel>(
+              init: TrendingViewModel(),
+              builder: (controller) {
+                return viewModel.trending.value.results == null
+                    ? Container()
+                    : ListView.builder(
+                        itemCount: viewModel.trending.value.results!.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            width: 140,
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                            'https://image.tmdb.org/t/p/original${viewModel.trending.value.results![index].posterPath}'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                      color: Colors.white,
+                                    ),
+                                    height: 200,
+                                  ),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Description(
+                                          title: viewModel.trending.value
+                                                  .results![index].title ??
+                                              viewModel.trending.value
+                                                  .results![index].name,
+                                          releaseDate: viewModel.trending.value
+                                              .results![index].releaseDate,
+                                          backDrop: viewModel.trending.value
+                                              .results![index].backdropPath,
+                                          rate: viewModel.trending.value
+                                              .results![index].voteAverage,
+                                          poster: viewModel.trending.value
+                                              .results![index].posterPath,
+                                          overview: viewModel.trending.value
+                                              .results![index].overview,
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
-                                color: Colors.white,
-                              ),
-                              height: 200,
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Description(
-                                    title: trendingMovies['results'][index]
-                                        ['title'],
-                                    releaseDate: trendingMovies['results']
-                                        [index]['release_date'],
-                                    backDrop: trendingMovies['results'][index]
-                                        ['backdrop_path'],
-                                    rate: trendingMovies['results'][index]
-                                        ['vote_average'],
-                                    poster: trendingMovies['results'][index]
-                                        ['poster_path'],
-                                    overview: trendingMovies['results'][index]
-                                        ['overview'],
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Flexible(
+                                  child: Text(
+                                    '${viewModel.trending.value.results![index].title ?? viewModel.trending.value.results![index].name}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
-                              );
-                            },
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Flexible(
-                            child: Text(
-                              trendingMovies['results'][index]['title'] ??
-                                  trendingMovies['results'][index]['name'],
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                              ),
-                              textAlign: TextAlign.center,
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
+                          );
+                        },
+                      );
               },
             ),
           )
@@ -94,3 +100,6 @@ class TrendingMovies extends StatelessWidget {
     );
   }
 }
+
+// trendingMovies['results'][index]['title'] ??
+// trendingMovies['results'][index]['name'],

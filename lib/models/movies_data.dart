@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:movie_app/network/api.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/models/top_rated_model.dart';
+import 'package:movie_app/network/api.dart';
 
-NetworkHelper networkHelper = NetworkHelper();
+Api networkHelper = Api();
 
 class MoviesModel extends ChangeNotifier {
   Map? mostpopular;
@@ -17,7 +18,7 @@ class MoviesModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Map? toprated;
+  TopRatedModel? toprated;
   Future getTopRated() async {
     toprated = await networkHelper.topRatedData();
     notifyListeners();

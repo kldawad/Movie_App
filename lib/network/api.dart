@@ -1,21 +1,33 @@
 import 'dart:convert';
+import 'dart:developer';
+
 import 'package:http/http.dart' as http;
+import 'package:movie_app/model/most_popular_movies_model.dart';
+import 'package:movie_app/model/top_rated_movies_model.dart';
+import 'package:movie_app/model/trending_movies_model.dart';
 import 'package:movie_app/utils/constants.dart';
 
-class NetworkHelper {
+class Api {
   Future mostPopularMoviesData() async {
     try {
       String url = '$kthemoviedbMostPopularUrl$apiKey&language=en-US&page=1';
       Uri uri = Uri.parse(url);
       http.Response response = await http.get(uri);
-      print(response.body);
+
+      log("status code : ${json.decode(response.body)["code"]}  MostPopularMovies : ${response.body}");
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        MostPopularMoviesModel mostPopularMovieModel =
+            MostPopularMoviesModel.fromJson(jsonDecode(response.body));
+        return mostPopularMovieModel;
       } else {
-        print(response.statusCode);
+        log("status code : ${response.statusCode}  MostPopularMovies : ${response.body}");
+        MostPopularMoviesModel mostPopularMovieModel =
+            MostPopularMoviesModel.fromJson(jsonDecode(response.body));
+        return mostPopularMovieModel;
       }
     } catch (e) {
       print(e);
+      return null;
     }
   }
 
@@ -24,14 +36,20 @@ class NetworkHelper {
       String url = '$kthemoviedbTrendingUrl$apiKey';
       Uri uri = Uri.parse(url);
       http.Response response = await http.get(uri);
-      print(response.body);
+      log("status code : ${json.decode(response.body)["code"]}  TrendingMovies : ${response.body}");
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        TrendingMoviesModel trendingMoviesModel =
+            TrendingMoviesModel.fromJson(jsonDecode(response.body));
+        return trendingMoviesModel;
       } else {
-        print(response.statusCode);
+        log("status code : ${response.statusCode}  TrendingMovies : ${response.body}");
+        TrendingMoviesModel trendingMoviesModel =
+            TrendingMoviesModel.fromJson(jsonDecode(response.body));
+        return trendingMoviesModel;
       }
     } catch (e) {
       print(e);
+      return null;
     }
   }
 
@@ -40,14 +58,20 @@ class NetworkHelper {
       String url = '$kthemoviedbTopRatedUrl$apiKey&language=en-US&page=1';
       Uri uri = Uri.parse(url);
       http.Response response = await http.get(uri);
-      print(response.body);
+      log("status code : ${response.statusCode}  TopRatedMovies : ${response.body}");
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        TopRatedMoviesModel topRatedMoviesModel =
+            TopRatedMoviesModel.fromJson(jsonDecode(response.body));
+        return topRatedMoviesModel;
       } else {
-        print(response.statusCode);
+        log("status code : ${response.statusCode}  TopRatedMovies : ${response.body}");
+        TopRatedMoviesModel topRatedMoviesModel =
+            TopRatedMoviesModel.fromJson(jsonDecode(response.body));
+        return topRatedMoviesModel;
       }
     } catch (e) {
       print(e);
+      return null;
     }
   }
 }
