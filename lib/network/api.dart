@@ -8,9 +8,10 @@ import 'package:movie_app/model/trending_movies_model.dart';
 import 'package:movie_app/utils/constants.dart';
 
 class Api {
-  Future mostPopularMoviesData() async {
+  Future mostPopularMoviesData(int count) async {
     try {
-      String url = '$kthemoviedbMostPopularUrl$apiKey&language=en-US&page=1';
+      String url =
+          '$kthemoviedbMostPopularUrl$apiKey&language=en-US&page=$count';
       Uri uri = Uri.parse(url);
       http.Response response = await http.get(uri);
 

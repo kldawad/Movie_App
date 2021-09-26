@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'models/movies_data.dart';
 import 'ui/home_screen.dart';
+import 'package:get/get.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,11 +10,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<MoviesModel>(
-      create: (context) => MoviesModel(),
-      child: MaterialApp(
-        home: HomeScreen(),
-      ),
+    return GetMaterialApp(
+      home: HomeScreen(),
     );
   }
 }
